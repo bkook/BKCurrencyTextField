@@ -177,16 +177,4 @@
     return YES;
 }
 
-#pragma mark - NPInputAccessoryToolbarDelegate
-
-- (void)clearButtonPressed:(id)sender
-{
-    self.numberValue = nil;
-}
-
-- (void)closeButtonPressed:(id)sender
-{
-    [self endEditing:YES];
-}
-
 @end
