@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BKCurrencyFormatter.h"
 
-@interface BKCurrencyTextField : UITextField <UITextFieldDelegate>
+@interface BKCurrencyTextField : UITextField <UITextFieldDelegate, BKCurrencyFormatterDelegate>
 
 @property (strong, nonatomic) NSDecimalNumber               *numberValue;
-@property (strong, nonatomic, readonly) NSNumberFormatter   *numberFormatter;
 @property (strong, nonatomic) NSLocale                      *locale;
 
 @end

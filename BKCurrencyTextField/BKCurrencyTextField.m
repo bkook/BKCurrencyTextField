@@ -7,12 +7,10 @@
 //
 
 #import "BKCurrencyTextField.h"
-#import "NSString+BKNumberExtension.h"
 
 @interface BKCurrencyTextField ()
 
-@property (assign, nonatomic) id<UITextFieldDelegate>   forwardDelegate;
-@property (strong, nonatomic) NSNumberFormatter         *numberFormatter;
+@property (strong, nonatomic) BKCurrencyFormatter         *currencyFormatter;
 
 @end
 
@@ -47,27 +45,27 @@
 
 - (void)initialize
 {
-    [super setDelegate:self];
+    self.currencyFormatter = [[BKCurrencyFormatter alloc] init];
+    self.currencyFormatter.delegate = self;
+    
+    [super setDelegate:self.currencyFormatter];
     
     self.keyboardType = UIKeyboardTypeDecimalPad;
-    
-    _numberFormatter = [[NSNumberFormatter alloc] init];
-    _numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
 }
 
 - (void)setDelegate:(id<UITextFieldDelegate>)delegate
 {
-    _forwardDelegate = delegate;
+    self.currencyFormatter.textFieldDelegate = delegate;
 }
 
 - (void)setLocale:(NSLocale *)locale
 {
-    _numberFormatter.locale = locale;
+    self.currencyFormatter.numberFormatter.locale = locale;
 }
 
 - (NSLocale *)locale
 {
-    return _numberFormatter.locale;
+    return self.currencyFormatter.numberFormatter.locale;
 }
 
 - (void)setNumberValue:(NSDecimalNumber *)numberValue
@@ -75,7 +73,7 @@
     if (nil == numberValue || [numberValue compare:[NSDecimalNumber zero]] == NSOrderedSame || [numberValue compare:[NSDecimalNumber notANumber]] == NSOrderedSame) {
         self.text = nil;
     } else {
-        self.text = [self.numberFormatter stringFromNumber:numberValue];
+        self.text = [self.currencyFormatter.numberFormatter stringFromNumber:numberValue];
     }
 }
 
@@ -85,96 +83,13 @@
         return nil;
     }
     
-    NSDecimal decimal = [self.numberFormatter numberFromString:self.text].decimalValue;
+    NSDecimal decimal = [self.currencyFormatter.numberFormatter numberFromString:self.text].decimalValue;
     return [NSDecimalNumber decimalNumberWithDecimal:decimal];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+- (void)currencyFormatter:(BKCurrencyFormatter *)formatter didUpdateNumber:(NSDecimalNumber *)number
 {
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldShouldBeginEditing:)]) {
-        return [self.forwardDelegate textFieldShouldBeginEditing:textField];
-    }
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
-        [self.forwardDelegate textFieldDidBeginEditing:textField];
-    }
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldShouldEndEditing:)]) {
-        return [self.forwardDelegate textFieldShouldEndEditing:textField];
-    }
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldDidEndEditing:)]) {
-        [self.forwardDelegate textFieldDidEndEditing:textField];
-    }
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
-        if (NO == [self.forwardDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string]) {
-            return NO;
-        }
-    }
-    
-    NSString *oldString = textField.text;
-    NSString *newString = [oldString stringByReplacingCharactersInRange:range withString:string];
-    
-    NSString *digits = [newString stringByRemovingNonNumericCharacters];
-    
-    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:digits];
-    
-    if (self.numberFormatter.maximumFractionDigits > 0) {
-        decimalNumber = [decimalNumber decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithMantissa:1 exponent:self.numberFormatter.maximumFractionDigits isNegative:NO]];
-    }
-    
-    // get current cursor position
-    UITextRange* selectedRange = [textField selectedTextRange];
-    UITextPosition* start = textField.beginningOfDocument;
-    NSInteger cursorOffset = [textField offsetFromPosition:start toPosition:selectedRange.start];
-    NSUInteger currentLength = oldString.length;
-    
-    // update text field
-    self.numberValue = decimalNumber;
-    
-    // if the cursor was not at the end of the string being entered, restore cursor position
-    if (cursorOffset != currentLength) {
-        NSInteger lengthDelta = newString.length - currentLength;
-        NSInteger newCursorOffset = MAX(0, MIN(newString.length, cursorOffset + lengthDelta));
-        UITextPosition* newPosition = [textField positionFromPosition:textField.beginningOfDocument offset:newCursorOffset];
-        UITextRange* newRange = [textField textRangeFromPosition:newPosition toPosition:newPosition];
-        [textField setSelectedTextRange:newRange];
-    }
-    
-    return NO;
-}
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldShouldClear:)]) {
-        return [self.forwardDelegate textFieldShouldClear:textField];
-    }
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if ([self.forwardDelegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
-        return [self.forwardDelegate textFieldShouldReturn:textField];
-    }
-    return YES;
+    self.numberValue = number;
 }
 
 @end

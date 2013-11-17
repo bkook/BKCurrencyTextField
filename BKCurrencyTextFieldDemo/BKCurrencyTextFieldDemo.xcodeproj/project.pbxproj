@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF30C2511839159200356BA4 /* BKCurrencyFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF30C2501839159200356BA4 /* BKCurrencyFormatter.m */; };
 		DFC79673182BC1EA00BCA3D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC79672182BC1EA00BCA3D7 /* Foundation.framework */; };
 		DFC79675182BC1EA00BCA3D7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC79674182BC1EA00BCA3D7 /* CoreGraphics.framework */; };
 		DFC79677182BC1EA00BCA3D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC79676182BC1EA00BCA3D7 /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF30C24F1839159200356BA4 /* BKCurrencyFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKCurrencyFormatter.h; sourceTree = "<group>"; };
+		DF30C2501839159200356BA4 /* BKCurrencyFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKCurrencyFormatter.m; sourceTree = "<group>"; };
 		DFC7966F182BC1EA00BCA3D7 /* BKCurrencyTextFieldDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BKCurrencyTextFieldDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFC79672182BC1EA00BCA3D7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DFC79674182BC1EA00BCA3D7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -164,6 +167,8 @@
 			children = (
 				DFC796A8182BC29600BCA3D7 /* BKCurrencyTextField.h */,
 				DFC796A9182BC29600BCA3D7 /* BKCurrencyTextField.m */,
+				DF30C24F1839159200356BA4 /* BKCurrencyFormatter.h */,
+				DF30C2501839159200356BA4 /* BKCurrencyFormatter.m */,
 				DFC796AB182BC3F100BCA3D7 /* NSString+BKNumberExtension.h */,
 				DFC796AC182BC3F100BCA3D7 /* NSString+BKNumberExtension.m */,
 			);
@@ -273,6 +278,7 @@
 				DFC796AD182BC3F100BCA3D7 /* NSString+BKNumberExtension.m in Sources */,
 				DFC796AA182BC29600BCA3D7 /* BKCurrencyTextField.m in Sources */,
 				DFC7967F182BC1EA00BCA3D7 /* main.m in Sources */,
+				DF30C2511839159200356BA4 /* BKCurrencyFormatter.m in Sources */,
 				DFC79683182BC1EA00BCA3D7 /* BKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +488,7 @@
 				DFC796A3182BC1EA00BCA3D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFC796A4182BC1EA00BCA3D7 /* Build configuration list for PBXNativeTarget "BKCurrencyTextFieldDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +497,7 @@
 				DFC796A6182BC1EA00BCA3D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
