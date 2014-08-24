@@ -6,6 +6,8 @@
 //  Copyright (c) 2013년 Byungkook Jang. All rights reserved.
 //
 
+#warning This library is deprecated and no longer maintained. Please use BKMoneyKit ( https://github.com/bkook/BKMoneyKit )
+
 #import <UIKit/UIKit.h>
 #import "BKCurrencyFormatter.h"
 
